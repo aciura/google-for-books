@@ -1,0 +1,14 @@
+{
+  "name": "typescript-carousel",
+  "version": "1.0.0",
+  "description": "Vanilla JS carousel",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "test": "echo \"Error: no tests installed\" && exit 1",
+    "build": "tsc",
+    "start": "node server.js"
+  },
+  "author": "aciura@gmail.com",
+  "license": "MIT"
+}

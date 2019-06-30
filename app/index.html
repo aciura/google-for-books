@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App</title>
+    <meta charset="utf-8" />
+    <script>
+      /* HACK for Typescript */
+      module = { exports: {} };
+      exports = {};
+      window.require = function(name) {
+        return window[name];
+      };
+    </script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <h1>Book Search</h1>
+    <div id="app">
+      <search-box data-text="Search"></search-box>
+    </div>
+    <script src="app.js"></script>
+    <script src="search-box.js"></script>
+    <script src="carousel.js"></script>
+  </body>
+</html>
