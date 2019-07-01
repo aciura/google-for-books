@@ -11,42 +11,86 @@
     Object.defineProperty(exports, "__esModule", { value: true });
     const template = document.createElement("template");
     template.innerHTML = `
+<link rel="stylesheet" type="text/css" href="carousel.css" />
 <div class="carousel-wrapper">
   <div class="carousel" id="carousel">
     <div class="carousel__button--next"></div>
     <div class="carousel__button--prev"></div>
   </div>
 </div>`;
+    const CarouselScrollDelay = 2500;
     class Carousel extends HTMLElement {
         constructor() {
             super();
             this._books = [];
+            this.isPlaying = true;
+            this.scrollCarousel = () => {
+                if (this.carousel) {
+                    const photos = this.carousel.querySelectorAll(".carousel__photo");
+                    const prevItem = (this.activeItem - 1 + photos.length) % photos.length;
+                    photos[prevItem].setAttribute("class", "carousel__photo");
+                    const newActiveItem = (this.activeItem + 1) % photos.length;
+                    preloadImage(photos[newActiveItem]);
+                    photos[this.activeItem].setAttribute("class", "carousel__photo prev");
+                    photos[newActiveItem].setAttribute("class", "carousel__photo active");
+                    const nextItem = (newActiveItem + 1) % photos.length;
+                    preloadImage(photos[nextItem]);
+                    photos[nextItem].setAttribute("class", "carousel__photo next");
+                    this.activeItem = newActiveItem;
+                }
+                setTimeout(this.scrollCarousel, CarouselScrollDelay);
+            };
+            this.initActiveItem = () => {
+                if (this.carousel) {
+                    const photos = this.carousel.querySelectorAll(".carousel__photo");
+                    preloadImage(photos[this.activeItem]);
+                    photos[this.activeItem].setAttribute("class", "carousel__photo active");
+                }
+                setTimeout(this.scrollCarousel, CarouselScrollDelay);
+            };
+            this.handleVisibilityChange = () => {
+                if (document.hidden) {
+                    document.title = "Hidden";
+                    this.isPlaying = false;
+                }
+                else {
+                    document.title = "Playing";
+                    this.isPlaying = true;
+                }
+            };
             console.log("Carousel constructor");
             this._shadowRoot = this.attachShadow({ mode: "open" });
             this._shadowRoot.appendChild(template.content.cloneNode(true));
             this.carousel = this._shadowRoot.querySelector("div.carousel");
+            this.activeItem = 0;
+            // Handle page visibility change
+            document.addEventListener("visibilitychange", this.handleVisibilityChange, false);
         }
         get books() {
             return this._books;
         }
         set books(newValue) {
             console.log("carousel: new books set:", newValue);
+            this.activeItem = 0;
             this._books = newValue;
             this.setAttribute("books", this._books.length.toString());
             for (let book of this._books) {
                 const img = document.createElement("img");
-                img.setAttribute("class", "carousel__photo initial");
-                img.setAttribute("src", `http://covers.openlibrary.org/b/ISBN/${book.isbn[0]}-L.jpg`);
+                img.setAttribute("class", "carousel__photo");
+                img.setAttribute("data-src", `http://covers.openlibrary.org/b/ISBN/${book.isbn[0]}-L.jpg`);
                 if (this.carousel)
                     this.carousel.appendChild(img);
             }
-            // <img
-            //   class="carousel__photo initial"
-            //   src="http://covers.openlibrary.org/b/ISBN/9789172630710-L.jpg"
-            // />
+            this.initActiveItem();
         }
     }
     exports.Carousel = Carousel;
+    function preloadImage(element) {
+        if (element && element.hasAttribute("data-src")) {
+            element.setAttribute("src", element.getAttribute("data-src") || "");
+            element.removeAttribute("data-src");
+        }
+    }
     customElements.define("carousel-element", Carousel);
 });
 // let itemClassName = "carousel__photo";
