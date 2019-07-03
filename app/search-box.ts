@@ -6,8 +6,8 @@ const template = document.createElement("template");
 template.innerHTML = `
   <input id="searchBox" type="text" />
   <input id="searchBtn" type="button" value="Search" />
-  <input id="voiceBtn" type="button" value="Voice" />
-  <div id="searchTime"><span></span></div>
+  <input id="voiceBtn" type="button" value="🎤" />
+  <div id="searchTime" style="font-size: small"><span></span></div>
   <carousel-element></carousel-element>
 `;
 
