@@ -51,8 +51,8 @@ export class SearchBox extends HTMLElement {
         "http://openlibrary.org/search.json?title=" + title
       );
       this.displaySearchTime(new Date());
+
       const parsed = await response.json();
-      console.log(parsed);
 
       const books = parsed.docs
         .filter((doc: any) => doc.cover_i)
@@ -96,11 +96,10 @@ export class SearchBox extends HTMLElement {
         second: "numeric",
         hour12: false
       };
+      const dateFormatter = Intl.DateTimeFormat(navigator.language, options);
 
       const span = document.createElement("span");
-      span.innerText =
-        "Fetched at " +
-        Intl.DateTimeFormat(navigator.language, options).format(date);
+      span.innerText = "Fetched at " + dateFormatter.format(date);
 
       if (this.searchTime.firstElementChild) {
         this.searchTime.replaceChild(span, this.searchTime.firstElementChild);
