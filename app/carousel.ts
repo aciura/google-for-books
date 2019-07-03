@@ -1,9 +1,9 @@
 const template = document.createElement("template");
 template.innerHTML = `
-  <link rel="stylesheet" type="text/css" href="carousel.css" />
+  <link rel="stylesheet" type="text/css" href="app/carousel.css" />
   <div class="carousel-wrapper">
     <div id="loader">
-      <img src="../image/loader.gif" />
+      <img src="image/loader.gif" />
     </div>
     <div class="carousel" id="carousel">
     </div>

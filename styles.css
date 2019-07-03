@@ -27,7 +27,7 @@ search-box {
   text-align: center;
 }
 
-h1 {
+header > h1 {
   text-align: center;
   margin: 0em 0em;
   padding: 1em 1em;
