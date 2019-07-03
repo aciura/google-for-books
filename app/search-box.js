@@ -35,7 +35,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                     const response = yield fetch("http://openlibrary.org/search.json?title=" + title);
                     this.displaySearchTime(new Date());
                     const parsed = yield response.json();
-                    console.log(parsed);
                     const books = parsed.docs
                         .filter((doc) => doc.cover_i)
                         .map((doc) => doc);
@@ -74,10 +73,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                         second: "numeric",
                         hour12: false
                     };
+                    const dateFormatter = Intl.DateTimeFormat(navigator.language, options);
                     const span = document.createElement("span");
-                    span.innerText =
-                        "Fetched at " +
-                            Intl.DateTimeFormat(navigator.language, options).format(date);
+                    span.innerText = "Fetched at " + dateFormatter.format(date);
                     if (this.searchTime.firstElementChild) {
                         this.searchTime.replaceChild(span, this.searchTime.firstElementChild);
                     }

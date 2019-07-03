@@ -1,0 +1,45 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: white;
+  margin: 0px;
+}
+
+header {
+  background-color: black;
+  color: azure;
+  box-shadow: 0px 5px 3px 3px grey;
+}
+
+#app {
+  align-content: center;
+  padding: 2em;
+  margin: 1em auto;
+  background-color: white;
+}
+
+search-box {
+  display: block;
+  align-content: center;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  margin: 0em 0em;
+  padding: 1em 1em;
+}
+
+footer {
+  height: 2em;
+  background-color: black;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  color: gray;
+  text-align: center;
+  font-style: italic;
+}
